@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kyudong Kim — The Vibe Commentator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Noto+Serif+KR:wght@700;900&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #F5F0E8;
+      --bg2:        #EDE8DC;
+      --card-bg:    #EDEAE0;
+      --green:      #1C3A2E;
+      --green-mid:  #2E5C46;
+      --green-light:#4A8068;
+      --teal:       #2D7A5F;
+      --text:       #1C2B22;
+      --text-mid:   #3D5248;
+      --text-light: #6B7F74;
+      --border:     rgba(28,58,46,0.15);
+      --border-mid: rgba(28,58,46,0.28);
+      --shadow:     0 6px 32px rgba(28,58,46,0.12);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ══ HEADER ══ */
+    header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 40px 56px;
+      display: flex;
+      align-items: center;
+      gap: 52px;
+      border-bottom: 1.5px solid var(--border-mid);
+    }
+    .profile-img-wrap {
+      flex: 0 0 33%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .profile-img {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background-color: var(--bg2);
+      border: 3px solid var(--border-mid);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 84px;
+      /*
+        ★ 실제 사진으로 교체하려면:
+        1. 이 이모지 텍스트 삭제
+        2. 아래 img 태그 삽입:
+           <img src="images/profile.jpg" style="width:100%;height:100%;object-fit:cover;">
+      */
+    }
+    .header-text { flex: 1; text-align: left; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(44px, 5.5vw, 70px);
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(16px, 2.2vw, 22px);
+      color: var(--teal);
+      margin-top: 8px;
+      font-weight: 700;
+    }
+    .description {
+      max-width: 480px;
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-mid);
+      font-weight: 300;
+    }
+
+    /* ══ TABS ══ */
+    .tabs-outer {
+      max-width: 1100px;
+      margin: 48px auto 0;
+      padding: 0 40px;
+    }
+    .tabs-wrapper {
+      display: flex;
+      border: 1.5px solid var(--border-mid);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .tab {
+      flex: 1;
+      background: var(--bg2);
+      border: none;
+      border-right: 1.5px solid var(--border-mid);
+      color: var(--text-mid);
+      padding: 18px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.22s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .tab:last-child { border-right: none; }
+    .tab-emoji { font-size: 22px; flex-shrink: 0; }
+    .tab-label { text-align: left; line-height: 1.3; }
+    .tab-en { display: block; font-size: 13px; font-weight: 700; color: var(--green); }
+    .tab-ko { display: block; font-size: 11px; font-weight: 400; color: var(--text-light); margin-top: 2px; }
+    .tab:hover { background: #E6E0D0; }
+    .tab.active { background: var(--green); }
+    .tab.active .tab-en { color: #F5F0E8; }
+    .tab.active .tab-ko { color: rgba(245,240,232,0.6); }
+
+    /* ══ SECTION ══ */
+    .section-content {
+      display: none;
+      padding: 40px 40px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      animation: fadeUp 0.35s ease;
+    }
+    .section-content.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(14px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .section-header {
+      margin-bottom: 32px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--green);
+    }
+    .section-title span { color: var(--teal); }
+    .section-sub { font-size: 13px; color: var(--text-light); margin-top: 4px; font-weight: 300; }
+
+    /* ══ GRID ══ */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    /* ══ BOOK CARD ══ */
+    .book-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-mid);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+    }
+    .book-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: var(--green-light); }
+    .book-thumb {
+      /* ★ 책 표지: style 속성에 background-image:url('경로') 추가 */
+      background-color: var(--green);
+      background-size: cover;
+      background-position: center;
+      height: 250px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px 16px 16px;
+    }
+    .book-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,58,46,0.93) 0%, rgba(28,58,46,0.18) 55%, transparent 100%);
+    }
+    .book-num {
+      position: absolute; top: 12px; left: 14px;
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      color: rgba(245,240,232,0.55); z-index: 1;
+    }
+    .book-title-overlay {
+      position: relative; z-index: 1;
+      font-family: 'Noto Serif KR', 'Playfair Display', serif;
+      font-size: 22px; font-weight: 900;
+      color: #F5F0E8; line-height: 1.25; letter-spacing: -0.01em;
+    }
+    .book-author-overlay {
+      position: relative; z-index: 1;
+      font-size: 12px; color: rgba(245,240,232,0.6);
+      margin-top: 6px; font-weight: 300;
+    }
+    .book-tagline {
+      padding: 12px 16px 16px;
+      font-size: 13px; color: var(--text-mid);
+      line-height: 1.65; font-weight: 300;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ══ MOVIE CARD ══ */
+    .movie-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-mid);
+      border-radius: 6px; overflow: hidden; cursor: pointer;
+      transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+    }
+    .movie-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: var(--green-light); }
+    .movie-thumb {
+      /* ★ 영화 이미지: style 속성에 background-image:url('경로') 추가 */
+      background-color: var(--green);
+      background-size: cover; background-position: center;
+      height: 260px; position: relative;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 20px 16px 16px;
+    }
+    .movie-thumb::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(28,58,46,0.94) 0%, rgba(28,58,46,0.12) 55%, transparent 100%);
+    }
+    .movie-num {
+      position: absolute; top: 12px; left: 14px;
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      color: rgba(245,240,232,0.55); z-index: 1;
+    }
+    .movie-title-overlay {
+      position: relative; z-index: 1;
+      font-family: 'Noto Serif KR', 'Playfair Display', serif;
+      font-size: 20px; font-weight: 900; color: #F5F0E8; line-height: 1.25;
+    }
+    .movie-author-overlay {
+      position: relative; z-index: 1;
+      font-size: 12px; color: rgba(245,240,232,0.6); margin-top: 5px; font-weight: 300;
+    }
+    .movie-bottom { padding: 12px 16px 16px; border-top: 1px solid var(--border); }
+    .stars { color: var(--teal); font-size: 13px; letter-spacing: 1px; }
+    .movie-tagline { font-size: 13px; color: var(--text-mid); margin-top: 6px; line-height: 1.6; font-weight: 300; }
+
+    /* ══ ESSAY CARD ══ */
+    .essay-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-mid);
+      border-radius: 6px; overflow: hidden; cursor: pointer;
+      transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+    }
+    .essay-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: var(--green-light); }
+    .essay-thumb {
+      /* ★ 에세이 이미지: style 속성에 background-image:url('경로') 추가 */
+      background-color: var(--green-mid);
+      background-size: cover; background-position: center;
+      height: 200px; position: relative;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 16px;
+    }
+    .essay-thumb::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(28,58,46,0.86) 0%, transparent 55%);
+    }
+    .essay-title-overlay {
+      position: relative; z-index: 1;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 18px; font-weight: 900; color: #F5F0E8; line-height: 1.3;
+    }
+    .essay-date {
+      padding: 10px 16px 14px;
+      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-light);
+    }
+
+    /* ══ DETAIL PANEL ══ */
+    .detail-panel {
+      display: none; margin-top: 48px;
+      background: #EDEAE0; border: 1.5px solid var(--border-mid);
+      border-radius: 6px; padding: 44px 48px; position: relative;
+      animation: fadeUp 0.35s ease;
+    }
+    .detail-panel.active { display: block; }
+    .detail-close {
+      position: absolute; top: 20px; right: 20px;
+      background: none; border: 1.5px solid var(--border-mid);
+      color: var(--text-light); width: 34px; height: 34px;
+      border-radius: 4px; cursor: pointer; font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .detail-close:hover { color: var(--green); border-color: var(--green); }
+    .detail-tag {
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .detail-title {
+      font-family: 'Noto Serif KR', 'Playfair Display', serif;
+      font-size: 30px; font-weight: 900; color: var(--green); line-height: 1.2; margin-bottom: 6px;
+    }
+    .detail-meta { font-size: 13px; color: var(--text-light); margin-bottom: 28px; font-weight: 300; }
+    .detail-body { font-size: 15.5px; line-height: 1.95; color: var(--text-mid); font-weight: 300; max-width: 680px; }
+    .detail-body p { margin-bottom: 1.3em; }
+    .detail-quote {
+      border-left: 3px solid var(--teal); padding: 4px 0 4px 20px; margin: 28px 0;
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 17px; color: var(--green-mid); line-height: 1.75;
+    }
+
+    /* ══ FOOTER ══ */
+    footer {
+      text-align: center; padding: 36px 24px;
+      border-top: 1.5px solid var(--border-mid);
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      color: var(--text-light); letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 680px) {
+      header { flex-direction: column; padding: 40px 20px 36px; gap: 28px; }
+      .profile-img-wrap { flex: none; }
+      .profile-img { width: 140px; height: 140px; font-size: 56px; }
+      .header-text { text-align: center; }
+      .tabs-outer, .section-content { padding-left: 16px; padding-right: 16px; }
+      .tab { flex-direction: column; gap: 4px; padding: 14px 6px; }
+      .detail-panel { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="profile-img-wrap">
+    <div class="profile-img">
+      <!--
+        ★ 프로필 사진 넣는 법:
+        1. 이 이모지(🧑) 텍스트를 지우세요
+        2. 아래를 붙여넣으세요:
+           <img src="images/profile.jpg" style="width:100%;height:100%;object-fit:cover;">
+      -->
+      🧑
+    </div>
+  </div>
+  <div class="header-text">
+    <h1>Kyudong Kim</h1>
+    <p class="subtitle">The Vibe Commentator</p>
+    <p class="description">
+      AI 콘텐츠가 범람하는 시장, 나만의 바이브로 문화를 향유하고 코멘트 하는 페이지.<br>
+      페이지 제작도 바이브를 살려 바이브 코딩으로 제작합니다.
+    </p>
+  </div>
+</header>
+
+<!-- ══ TABS ══ -->
+<div class="tabs-outer">
+  <div class="tabs-wrapper">
+    <button class="tab active" onclick="switchTab('reader')">
+      <span class="tab-emoji">📚</span>
+      <span class="tab-label">
+        <span class="tab-en">The Vibe Reader</span>
+        <span class="tab-ko">바이브 넘치는 독서 기록</span>
+      </span>
+    </button>
+    <button class="tab" onclick="switchTab('watcher')">
+      <span class="tab-emoji">🎬</span>
+      <span class="tab-label">
+        <span class="tab-en">The Vibe Watcher</span>
+        <span class="tab-ko">바이브 넘치는 영화 기록</span>
+      </span>
+    </button>
+    <button class="tab" onclick="switchTab('writer')">
+      <span class="tab-emoji">✍️</span>
+      <span class="tab-label">
+        <span class="tab-en">The Vibe Writer</span>
+        <span class="tab-ko">바이브 넘치는 에세이</span>
+      </span>
+    </button>
+  </div>
+</div>
+
+<!-- ══ SECTION 1: READER ══ -->
+<div class="section-content active" id="sec-reader">
+  <div class="section-header">
+    <h2 class="section-title">The Vibe <span>Reader</span></h2>
+    <p class="section-sub">바이브 넘치는 독서 기록</p>
+  </div>
+  <div class="card-grid" id="book-grid"></div>
+  <div class="detail-panel" id="book-detail">
+    <button class="detail-close" onclick="closeDetail('book-detail')">✕</button>
+    <div class="detail-tag"   id="bd-tag"></div>
+    <div class="detail-title" id="bd-title"></div>
+    <div class="detail-meta"  id="bd-meta"></div>
+    <div class="detail-body"  id="bd-body"></div>
+  </div>
+</div>
+
+<!-- ══ SECTION 2: WATCHER ══ -->
+<div class="section-content" id="sec-watcher">
+  <div class="section-header">
+    <h2 class="section-title">The Vibe <span>Watcher</span></h2>
+    <p class="section-sub">바이브 넘치는 영화 기록</p>
+  </div>
+  <div class="card-grid" id="movie-grid"></div>
+</div>
+
+<!-- ══ SECTION 3: WRITER ══ -->
+<div class="section-content" id="sec-writer">
+  <div class="section-header">
+    <h2 class="section-title">The Vibe <span>Writer</span></h2>
+    <p class="section-sub">바이브 넘치는 에세이</p>
+  </div>
+  <div class="card-grid" id="essay-grid"></div>
+</div>
+
+<footer>© 2025 Kyudong Kim · Vibe Coded · kyudong-rafa-kim.github.io</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   ★★★ 콘텐츠 데이터 입력 공간 ★★★
+
+   [ books ]
+   thumb   : 책 표지 이미지 경로 (예: "images/book1.jpg"), 없으면 ""
+   content : 독후감 본문 HTML
+             <p>단락</p> 형식으로 작성
+             인용문: <blockquote class="detail-quote">문장</blockquote>
+
+   [ movies ]
+   thumb   : 영화 스틸 이미지 경로, 없으면 ""
+   stars   : 별점 (★☆ 조합, 5개)
+
+   [ essays ]
+   thumb   : 에세이 대표 이미지 경로, 없으면 ""
+══════════════════════════════════════════════════════ */
+
+const books = [
+  {
+    num: "13.",
+    title: "힐빌리의 노래",
+    author: "J.D. Vance",
+    tagline: "집단의 패배주의를 극복하는 법",
+    thumb: "",
+    content: `
+      <p>여느 집단에든 "여긴 이래서 안돼" 라는 말을 달고 사는 사람들이 있다.</p>
+      <blockquote class="detail-quote">능력은 당연히 큰 도움이 된다. 그러나 노력 부족을 능력 부족으로 착각해서 스스로의 가치를 떨어뜨리며 살아왔다는 사실을 깨닫는 건 굉장히 중요하다.</blockquote>
+      <p>★ 이곳에 독후감 본문을 이어서 작성하세요. &lt;p&gt; 태그로 단락을 나누세요.</p>
+    `
+  },
+  {
+    num: "29.",
+    title: "남한산성",
+    author: "황동혁",
+    tagline: "소리내어 울지도 못하고 비통함이 흰 눈 위에 수북이 쌓여간다",
+    thumb: "",
+    content: `<p>★ 이곳에 독후감 본문을 작성하세요.</p>`
+  },
+];
+
+const movies = [
+  {
+    num: "29.",
+    title: "남한산성",
+    author: "황동혁 감독, 2017",
+    stars: "★★★★½",
+    tagline: "나였다면 어땠을까. 냉철하게 판단하고 그 판단을 끝까지 밀고 나갈 수 있었을까?",
+    thumb: ""
+  },
+];
+
+const essays = [
+  {
+    date: "2025.03",
+    title: "★ 에세이 제목을 여기에 입력하세요",
+    thumb: ""
+  },
+];
+
+/* ══ 렌더링 ══ */
+function renderBooks() {
+  document.getElementById('book-grid').innerHTML = books.map((b, i) => `
+    <div class="book-card" onclick="openBook(${i})">
+      <div class="book-thumb" style="${b.thumb ? `background-image:url('${b.thumb}')` : ''}">
+        <span class="book-num">${b.num}</span>
+        <div class="book-title-overlay">${b.title}</div>
+        <div class="book-author-overlay">${b.author}</div>
+      </div>
+      <div class="book-tagline">${b.tagline}</div>
+    </div>`).join('');
+}
+
+function openBook(i) {
+  const b = books[i];
+  document.getElementById('bd-tag').textContent   = `The Vibe Reader · ${b.num}`;
+  document.getElementById('bd-title').textContent = b.title;
+  document.getElementById('bd-meta').textContent  = b.author;
+  document.getElementById('bd-body').innerHTML    = b.content;
+  const panel = document.getElementById('book-detail');
+  panel.classList.add('active');
+  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+function closeDetail(id) { document.getElementById(id).classList.remove('active'); }
+
+function renderMovies() {
+  document.getElementById('movie-grid').innerHTML = movies.map(m => `
+    <div class="movie-card">
+      <div class="movie-thumb" style="${m.thumb ? `background-image:url('${m.thumb}')` : ''}">
+        <span class="movie-num">${m.num}</span>
+        <div class="movie-title-overlay">${m.title}</div>
+        <div class="movie-author-overlay">${m.author}</div>
+      </div>
+      <div class="movie-bottom">
+        <div class="stars">${m.stars}</div>
+        <div class="movie-tagline">${m.tagline}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderEssays() {
+  document.getElementById('essay-grid').innerHTML = essays.map(e => `
+    <div class="essay-card">
+      <div class="essay-thumb" style="${e.thumb ? `background-image:url('${e.thumb}')` : ''}">
+        <div class="essay-title-overlay">${e.title}</div>
+      </div>
+      <div class="essay-date">${e.date}</div>
+    </div>`).join('');
+}
+
+function switchTab(name) {
+  const names = ['reader','watcher','writer'];
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', names[i]===name));
+  document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+  document.getElementById(`sec-${name}`).classList.add('active');
+}
+
+renderBooks(); renderMovies(); renderEssays();
+</script>
+</body>
+</html>
