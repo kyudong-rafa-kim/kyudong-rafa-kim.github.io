@@ -235,7 +235,7 @@
     }
     .movie-thumb::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(28,58,46,0.94) 0%, rgba(28,58,46,0.12) 55%, transparent 100%);
+      background: linear-gradient(to top, rgba(28,58,46,0.96) 0%, rgba(28,58,46,0.12) 55%, transparent 100%);
     }
     .movie-num {
       position: absolute; top: 12px; left: 14px;
@@ -245,11 +245,11 @@
     .movie-title-overlay {
       position: relative; z-index: 1;
       font-family: 'Noto Serif KR', 'Playfair Display', serif;
-      font-size: 20px; font-weight: 900; color: #F5F0E8; line-height: 1.25;
+      font-size: 25px; font-weight: 900; color: #F5F0E8; line-height: 1.2;
     }
     .movie-author-overlay {
       position: relative; z-index: 1;
-      font-size: 12px; color: rgba(245,240,232,0.6); margin-top: 5px; font-weight: 300;
+      font-size: 13px; color: rgba(245,240,232,0.6); margin-top: 5px; font-weight: 300;
     }
     .movie-bottom { padding: 12px 16px 16px; border-top: 1px solid var(--border); }
     .stars { color: var(--teal); font-size: 13px; letter-spacing: 1px; }
@@ -311,7 +311,7 @@
     }
     .detail-meta { font-size: 13px; color: var(--text-light); margin-bottom: 28px; font-weight: 300; }
     .detail-body { font-size: 15.5px; line-height: 1.95; color: var(--text-mid); font-weight: 300; max-width: 680px; }
-    .detail-body p { margin-bottom: 1.3em; }
+    .detail-body p { margin-bottom: 1.3em;}
     .detail-quote {
       border-left: 3px solid var(--teal); padding: 4px 0 4px 20px; margin: 28px 0;
       font-family: 'Playfair Display', serif; font-style: italic;
@@ -411,6 +411,13 @@
     <p class="section-sub">바이브 넘치는 영화 기록</p>
   </div>
   <div class="card-grid" id="movie-grid"></div>
+  <div class="detail-panel" id="movie-detail">
+    <button class="detail-close" onclick="closeDetail('movie-detail')">✕</button>
+    <div class="detail-tag"   id="md-tag"></div>
+    <div class="detail-title" id="md-title"></div>
+    <div class="detail-meta"  id="md-meta"></div>
+    <div class="detail-body"  id="md-body"></div>
+  </div>
 </div>
 
 <!-- ══ SECTION 3: WRITER ══ -->
@@ -420,6 +427,13 @@
     <p class="section-sub">바이브 넘치는 에세이</p>
   </div>
   <div class="card-grid" id="essay-grid"></div>
+  <div class="detail-panel" id="essay-detail">
+    <button class="detail-close" onclick="closeDetail('essay-detail')">✕</button>
+    <div class="detail-tag"   id="ed-tag"></div>
+    <div class="detail-title" id="ed-title"></div>
+    <div class="detail-meta"  id="ed-meta"></div>
+    <div class="detail-body"  id="ed-body"></div>
+  </div>
 </div>
 
 <footer>© 2026 Kyudong Kim, all rights reserved · kyudong-rafa-kim.github.io</footer>
@@ -471,8 +485,21 @@ const movies = [
     title: "남한산성",
     author: "황동혁, 2017",
     stars: "★★★★½",
-    tagline: "나였다면 어땠을까. 냉철하게 판단하고 <br> 그 판단을 끝까지 밀고 나갈 수 있었을까?",
-    thumb: "namhansanseong.main.jpg"
+    tagline: "📝소리내어 울지도 못하고 <br> 비통함이 흰 눈 위에 수북이 쌓여간다",
+    thumb: "namhansansung.main.jpg",
+    content: `
+      <blockquote class="detail-quote">두려우냐. 척화를 하자니 칸의 손에 죽을까 두렵고 <br> 오랑캐에게 살려달라는 답서를 쓰자니 만고의 역적이 될까, 그것이 두려운 것이냐.</blockquote>
+      <p> 조선 중후기는 한국사 공부의 1차 난관이다. (2차는 개화기 연도 외우기.. 3차는 일제강점기 만주의 독립운동세력 외우기…) 성종 이후 난립하는 붕당과 이름도 어려운 예송논쟁 및 사화를 외우다 보면, 어느덧 우리의 역사는 지리멸렬한 정쟁을 일삼다 네 차례의 전란을 겪고, 또다시 정쟁에 빠져 결국 일제에 국권을 빼앗기는 답답한 역사라 생각하게 된다. 
+        <br> <br> 물론 이러한 역사 중간중간에 우리나라도 내재적인 역량으로 ‘근대’ 사회로 발전할 수 있었다는 것을 입증하기 위한 노력들을 배운다. 하지만 그 과정에서 우리는 조선의 기성 세력을 성리학적인 수구 이념에 갇혀 붕당정치 만을 일삼는 인물들로, 실학자들은 배척받으면서도 조선의 근대화와 민생 경제의 안정을 추구했던 인물들로 이분법적인 평가를 내리게 된다. (최근 교육과정에서는 이런 구도가 바뀌었을지도 모르겠다) 
+        <br> <br> 하지만 이미 서양의 합리성을 내재화한 우리가, 당대의 사람들을 이렇게 흑백논리로 판단할 수 있을지는 생각해보아야 할 대목이다. 지금 이 시간을 살아가는 우리들도 치열한 내적 갈등과 고민을 안고 상충하는 가치 중 무엇을 따를 것인지 머리를 싸매고 있는데 그 시대라고 달랐을까. 하물며 나라와 사직의 존망을 걸고 저울질을 해야 했던, 그 해 겨울 남한산성의 인조와 사대부들은 더더욱 다층적인 고민과 가치관을 갖고 있었을 것이다. 
+        <br> <br> 영화 ‘남한산성’은 시점과 톤을 활용해 당시의 좌절과 고뇌를 잔인하도록 철저하게 고증한다. 불안과 사명감이 교차하는 감정을 절제되고 차가운 톤으로, 철저히 성 안의 시점에서 보여줌으로써 당시의 상황이 단순 ‘척화파와 주화파’의 이분법적 논리로 이해될 수 없다는 점을 관객들이 체득할 수 밖에 없도록 만든 것이다. 
+        <br> <br> 그리고 이러한 장치는 관객으로 하여금 ‘나였다면 어땠을 것인가’에 대한 고민에 빠지게 한다. 굴욕과 불명예를 자처하여 항복을 주장할 것인가, 일말의 주도권을 확보하기 위해 항전을 주장할 것인가. 그리고 이 고민이 계속될 때 관객은 비로소 깨닫게 된다. 정쟁의 역사를 비단 ‘지리멸렬하다’ 라고 깎아내릴 수만은 없겠구나. 반대파의 의견을 칼과 총으로 묵살하고 특정 집단의 의견을 관철하는 것이 과연 우리가 바라는 ‘근대성’이었을까.
+        <br> <br> 한 가지 아쉬운 점은 실제 역사 및 원작과 달리 김상헌을 자결시킨 엔딩 부분의 설정이다. 김상헌이 실제로 항복 결정 이후 자살 시도를 한 것은 사실이다. 그러나 호란 이후 자신의 의견을 굽히지 않고 대청 강경 노선을 펼치면서, 청나라의 감옥에서 비로소 최명길과 서로를 이해했던 드라마를 쓴 인물이기에 이 대목에서 퇴장시키기에는 아깝다는 생각이다. (더욱이 자신이 반정으로 세운 임금까지 부정하며 새로운 세상을 만들어야 한다는 대사는 김상헌의 좌절을 고려하더라도 너무 간 것 같다)
+        <br> <br> 최근 우리 영화의 위기가 계속되고 있다. 전통적인 제작 환경은 극장의 위기와 함께 활기를 잃고 있고, OTT는 대규모 자본을 투입한 만큼 성과를 뽑기 위해 대중의 입맛인 ‘액션’에만 초점을 맞춘 작품들을 제작한다. 최근 넷플릭스에서 제작된 영화들을 보고 있자니, 좋은 주제의식과 컨셉에서 시작한 작품들이 모두 액션으로 귀결되는 것 같아 아쉽기도 하다.
+        <br> <br> 물론, 남한산성은 390만명의 관객 만을 동원하며, 상업적으로 크게 성공하지 못했다. 하지만 황동혁 감독이 차기작 ‘오징어게임’으로 최고의 상업적 성과를 거둔 것으로 미루어봤을 때, 결국 다양한 장르의 완성도 있는 작품을 만들 수 있는 토양이 보장되어야 작품성과 오락성을 모두 갖춘 ‘대박 영화’를 만들 수 있는 제작 소프트/하드웨어가 갖추어질 수 있다고 생각한다.
+        <br> <br> 2024.10.21
+</p>
+    `
   },
 ];
 
@@ -480,7 +507,8 @@ const essays = [
   {
     date: "2025.03",
     title: "★ 에세이 제목을 여기에 입력하세요",
-    thumb: ""
+    thumb: "",
+    content: `<p>★ 이곳에 에세이 본문을 작성하세요. &lt;p&gt; 태그로 단락을 나누세요.</p>`
   },
 ];
 
@@ -511,8 +539,8 @@ function openBook(i) {
 function closeDetail(id) { document.getElementById(id).classList.remove('active'); }
 
 function renderMovies() {
-  document.getElementById('movie-grid').innerHTML = movies.map(m => `
-    <div class="movie-card">
+  document.getElementById('movie-grid').innerHTML = movies.map((m, i) => `
+    <div class="movie-card" onclick="openMovie(${i})">
       <div class="movie-thumb" style="${m.thumb ? `background-image:url('${m.thumb}')` : ''}">
         <span class="movie-num">${m.num}</span>
         <div class="movie-title-overlay">${m.title}</div>
@@ -525,14 +553,36 @@ function renderMovies() {
     </div>`).join('');
 }
 
+function openMovie(i) {
+  const m = movies[i];
+  document.getElementById('md-tag').textContent   = `The Vibe Watcher · ${m.num}`;
+  document.getElementById('md-title').textContent = m.title;
+  document.getElementById('md-meta').innerHTML    = `${m.author} &nbsp;·&nbsp; ${m.stars}`;
+  document.getElementById('md-body').innerHTML    = m.content;
+  const panel = document.getElementById('movie-detail');
+  panel.classList.add('active');
+  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
 function renderEssays() {
-  document.getElementById('essay-grid').innerHTML = essays.map(e => `
-    <div class="essay-card">
+  document.getElementById('essay-grid').innerHTML = essays.map((e, i) => `
+    <div class="essay-card" onclick="openEssay(${i})">
       <div class="essay-thumb" style="${e.thumb ? `background-image:url('${e.thumb}')` : ''}">
         <div class="essay-title-overlay">${e.title}</div>
       </div>
       <div class="essay-date">${e.date}</div>
     </div>`).join('');
+}
+
+function openEssay(i) {
+  const e = essays[i];
+  document.getElementById('ed-tag').textContent   = `The Vibe Writer · ${e.date}`;
+  document.getElementById('ed-title').textContent = e.title;
+  document.getElementById('ed-meta').textContent  = e.date;
+  document.getElementById('ed-body').innerHTML    = e.content;
+  const panel = document.getElementById('essay-detail');
+  panel.classList.add('active');
+  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
 }
 
 function switchTab(name) {
