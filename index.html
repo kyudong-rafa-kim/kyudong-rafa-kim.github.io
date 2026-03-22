@@ -57,12 +57,14 @@
       align-items: center;
       justify-content: center;
       font-size: 84px;
-      /*
-        ★ 실제 사진으로 교체하려면:
-        1. 이 이모지 텍스트 삭제
-        2. 아래 img 태그 삽입:
-           <img src="images/profile.jpg" style="width:100%;height:100%;object-fit:cover;">
-      */
+    }
+    /* 이미지가 원 안에 꽉 차고 얼굴 중심으로 크롭 */
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
     .header-text { flex: 1; text-align: left; }
     h1 {
@@ -146,6 +148,7 @@
       margin-bottom: 32px;
       padding-bottom: 18px;
       border-bottom: 1px solid var(--border);
+      text-align: center;
     }
     .section-title {
       font-family: 'Playfair Display', serif;
@@ -341,12 +344,12 @@
   <div class="profile-img-wrap">
     <div class="profile-img">
       <!--
-        ★ 프로필 사진 넣는 법:
-        1. 이 이모지(🧑) 텍스트를 지우세요
-        2. 아래를 붙여넣으세요:
-           <img src="images/profile.jpg" style="width:100%;height:100%;object-fit:cover;">
+        ★ 이미지 위치/크기 조정:
+        object-position 값을 바꾸면 크롭 위치가 바뀌어요
+        예) "center top" = 위쪽 기준, "center center" = 가운데
       -->
-      <img src="emoji.png">    
+      <img src="emoji.png" alt="프로필" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+    </div>
   </div>
   <div class="header-text">
     <h1>Kyudong Kim</h1>
