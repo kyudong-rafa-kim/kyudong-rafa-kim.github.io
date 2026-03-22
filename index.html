@@ -200,7 +200,7 @@
     .book-title-overlay {
       position: relative; z-index: 1;
       font-family: 'Noto Serif KR', 'Playfair Display', serif;
-      font-size: 25px; font-weight: 900;
+      font-size: 23.7px; font-weight: 900;
       color: #F5F0E8; line-height: 1.25; letter-spacing: -0.01em;
     }
     .book-author-overlay {
@@ -474,10 +474,11 @@ const books = [
     `
   },
   {
-    num: "29.",
-    title: "남한산성",
-    author: "황동혁",
-    tagline: "소리내어 울지도 못하고 비통함이 흰 눈 위에 수북이 쌓여간다",
+    num: "1.",
+    cardTitle: "달리기를 말할 때 <br> 내가 하고 싶은 이야기",
+    title: "달리기를 말할 때 내가 하고 싶은 이야기",
+    author: "무라카미 하루키",
+    tagline: "📝 나는 왜 더 잘 달리지 못하는가?",
     thumb: "",
     position: "center top",
     content: `<p>★ 이곳에 독후감 본문을 작성하세요.</p>`
@@ -523,7 +524,7 @@ function renderBooks() {
     <div class="book-card" onclick="openBook(${i})">
       <div class="book-thumb" style="${b.thumb ? `background-image:url('${b.thumb}'); background-position:${b.position || 'center'}` : ''}">
         <span class="book-num">${b.num}</span>
-        <div class="book-title-overlay">${b.title}</div>
+        <div class="book-title-overlay">${b.cardTitle || b.title}</div>
         <div class="book-author-overlay">${b.author}</div>
       </div>
       <div class="book-tagline">${b.tagline}</div>
@@ -548,7 +549,7 @@ function renderMovies() {
     <div class="movie-card" onclick="openMovie(${i})">
       <div class="movie-thumb" style="${m.thumb ? `background-image:url('${m.thumb}'); background-position:${m.position || 'center'}` : ''}">
         <span class="movie-num">${m.num}</span>
-        <div class="movie-title-overlay">${m.title}</div>
+        <div class="movie-title-overlay">${m.cardTitle || m.title}</div>
         <div class="movie-author-overlay">${m.author}</div>
       </div>
       <div class="movie-bottom">
@@ -573,7 +574,7 @@ function renderEssays() {
   document.getElementById('essay-grid').innerHTML = essays.map((e, i) => `
     <div class="essay-card" onclick="openEssay(${i})">
       <div class="essay-thumb" style="${e.thumb ? `background-image:url('${e.thumb}'); background-position:${e.position || 'center'}` : ''}">
-        <div class="essay-title-overlay">${e.title}</div>
+        <div class="essay-title-overlay">${e.cardTitle || e.title}</div>
       </div>
       <div class="essay-date">${e.date}</div>
     </div>`).join('');
